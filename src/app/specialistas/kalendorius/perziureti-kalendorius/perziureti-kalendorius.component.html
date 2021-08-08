@@ -1,0 +1,288 @@
+<div class="addContainer">
+  <div class="modalHeader">
+    <div class="editRowModal">
+      <div class="modalHeader clearfix">
+        <div class="modal-about">
+          <div class="font-weight-bold p-t-5 p-l-10 font-17">
+            {{ formosAntraste }}
+          </div>
+        </div>
+      </div>
+    </div>
+    <button mat-icon-button (click)="dialogRef.close()" aria-label="Uždaryti">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <!---->
+  <div mat-dialog-content>
+    <form
+      class="register-form m-4"
+      [formGroup]="kalendoriusForma"
+      (ngSubmit)="(patvirtinti)"
+    >
+      <mat-horizontal-stepper [linear]="false" #stepper>
+        <mat-step>
+          <ng-template matStepLabel>Vizito informacija</ng-template>
+          <div
+            class="col-xl-6 col-lg-12 col-md-12 col-sm-12 mb-2"
+            style="float: left; padding: 5px"
+          >
+            <div class="row">
+              <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 mb-2">
+                <mat-form-field class="example-full-width" appearance="fill">
+                  <mat-label>Vardas ir pavardė</mat-label>
+                  <span matPrefix>
+                    <mat-icon class="mr-2">person</mat-icon>
+                  </span>
+                  <input matInput formControlName="vardaspavarde" readonly />
+                </mat-form-field>
+              </div>
+              <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 mb-2">
+                <mat-form-field class="example-full-width" appearance="fill">
+                  <mat-label>Tel. numeris</mat-label>
+                  <span matPrefix>
+                    <mat-icon class="mr-2">phone</mat-icon>
+                  </span>
+                  <input matInput formControlName="telnr" readonly />
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 mb-2">
+                <mat-form-field class="example-full-width" appearance="fill">
+                  <mat-label>Gyvūnas</mat-label>
+                  <span matPrefix>
+                    <mat-icon class="mr-2">cruelty_free</mat-icon>
+                  </span>
+                  <input matInput formControlName="gyvunasvardas" readonly />
+                </mat-form-field>
+              </div>
+              <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 mb-2">
+                <mat-form-field class="example-full-width" appearance="fill">
+                  <mat-label>Čipas</mat-label>
+                  <span matPrefix>
+                    <mat-icon class="mr-2">sd_card</mat-icon>
+                  </span>
+                  <input matInput formControlName="gyvunascipas" readonly />
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+                <mat-form-field class="example-full-width" appearance="fill">
+                  <mat-label>Paslauga</mat-label>
+                  <span matPrefix>
+                    <mat-icon class="mr-2">medication</mat-icon>
+                  </span>
+                  <input
+                    matInput
+                    formControlName="paslaugapavadinimas"
+                    readonly
+                  />
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+          <div
+            class="col-xl-6 col-lg-12 col-md-12 col-sm-12 mb-2"
+            style="float: right; padding: 5px"
+          >
+            <div class="row">
+              <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                <mat-form-field class="example-full-width" appearance="fill">
+                  <mat-label>Data</mat-label>
+                  <span matPrefix>
+                    <mat-icon class="mr-2">calendar_today</mat-icon>
+                  </span>
+                  <input matInput formControlName="vizitasdiena" readonly />
+                </mat-form-field>
+              </div>
+              <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                <mat-form-field class="example-full-width" appearance="fill">
+                  <mat-label>Laikas</mat-label>
+                  <span matPrefix>
+                    <mat-icon class="mr-2">access_time</mat-icon>
+                  </span>
+                  <input
+                    matInput
+                    formControlName="vizitaspradziapabaiga"
+                    readonly
+                  />
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+                <mat-form-field class="example-full-width" appearance="fill">
+                  <mat-label>Pastabos</mat-label>
+                  <textarea
+                    matInput
+                    formControlName="vizitaspastabos"
+                    style="min-height: 92px"
+                    readonly
+                  ></textarea>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+          <!---->
+        </mat-step>
+        <mat-step>
+          <ng-template matStepLabel>Istorija</ng-template>
+          <div class="row">
+            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+              <mat-form-field class="example-full-width" appearance="fill">
+                <mat-label>Savijauta</mat-label>
+                <span matPrefix>
+                  <mat-icon class="mr-2">sick</mat-icon>
+                </span>
+                <mat-select
+                  formControlName="istorijasavijauta"
+                  [disabled]="kalendorius.vizitasbusena == 'Atliktas'"
+                >
+                  <mat-option value="Puiki">Puiki</mat-option>
+                  <mat-option value="Gera">Gera</mat-option>
+                  <mat-option value="Prasta">Prasta</mat-option>
+                  <mat-option value="Bloga">Bloga</mat-option>
+                </mat-select>
+                <mat-error
+                  *ngIf="
+                    kalendoriusForma
+                      .get('istorijasavijauta')
+                      .hasError('required')
+                  "
+                  >Pasirinkite savijautą</mat-error
+                >
+              </mat-form-field>
+            </div>
+            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+              <mat-form-field class="example-full-width" appearance="fill">
+                <mat-label>Svoris</mat-label>
+                <span matPrefix>
+                  <mat-icon class="mr-2">monitor_weight</mat-icon>
+                </span>
+                <input
+                  matInput
+                  formControlName="istorijasvoris"
+                  type="number"
+                  onKeyPress="if(this.value.length==10) return false;"
+                  [readonly]="kalendorius.vizitasbusena == 'Atliktas'"
+                />
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+              <mat-form-field class="example-full-width" appearance="fill">
+                <mat-label>Nustatyta</mat-label>
+                <span matPrefix>
+                  <mat-icon class="mr-2">remove_red_eye</mat-icon>
+                </span>
+                <input
+                  matInput
+                  formControlName="istorijanustatyta"
+                  [readonly]="kalendorius.vizitasbusena == 'Atliktas'"
+                />
+                <mat-error
+                  *ngIf="
+                    kalendoriusForma
+                      .get('istorijanustatyta')
+                      .hasError('required')
+                  "
+                  >Įveskite ką nustatėte gyvūnui</mat-error
+                >
+              </mat-form-field>
+            </div>
+            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+              <mat-form-field class="example-full-width" appearance="fill">
+                <mat-label>Paskirtas Gydymas</mat-label>
+                <span matPrefix>
+                  <mat-icon class="mr-2">add_link</mat-icon>
+                </span>
+                <input
+                  matInput
+                  formControlName="istorijapaskirtasgydymas"
+                  [readonly]="kalendorius.vizitasbusena == 'Atliktas'"
+                />
+                <mat-error
+                  *ngIf="
+                    kalendoriusForma
+                      .get('istorijapaskirtasgydymas')
+                      .hasError('required')
+                  "
+                  >Įveskite paskirtą gydymą</mat-error
+                >
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+              <mat-form-field class="example-full-width" appearance="fill">
+                <mat-label>Komentarai</mat-label>
+                <textarea
+                  matInput
+                  formControlName="istorijakomentarai"
+                  [readonly]="kalendorius.vizitasbusena == 'Atliktas'"
+                  style="min-height: 100px"
+                ></textarea>
+                <mat-error
+                  *ngIf="
+                    kalendoriusForma
+                      .get('istorijakomentarai')
+                      .hasError('required')
+                  "
+                  >Įveskite komentarus</mat-error
+                >
+              </mat-form-field>
+            </div>
+          </div>
+        </mat-step>
+        <mat-step>
+          <ng-template matStepLabel>Skiepas</ng-template>
+          <div class="row">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+              <mat-form-field class="example-full-width" appearance="fill">
+                <mat-label>Skiepo Pavadinimas</mat-label>
+                <span matPrefix>
+                  <mat-icon class="mr-2">colorize</mat-icon>
+                </span>
+                <input
+                  matInput
+                  formControlName="skiepaspavadinimas"
+                  [readonly]="kalendorius.vizitasbusena == 'Atliktas'"
+                />
+              </mat-form-field>
+            </div>
+          </div>
+        </mat-step>
+      </mat-horizontal-stepper>
+      <!---->
+    </form>
+  </div>
+  <!---->
+  <div class="row">
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+      <div class="button-row button-center">
+        <button
+          mat-raised-button
+          *ngIf="kalendorius.vizitasbusena == 'Patvirtintas'"
+          color="primary"
+          [type]="patvirtinti"
+          [disabled]="!kalendoriusForma.valid"
+          (click)="patvirtinti()"
+        >
+          Išsaugoti
+        </button>
+        <button
+          mat-raised-button
+          color="accent"
+          (click)="uzdaryti()"
+          tabindex="-1"
+        >
+          Uždaryti
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

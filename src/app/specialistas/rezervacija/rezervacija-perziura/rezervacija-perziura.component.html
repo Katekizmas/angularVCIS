@@ -1,0 +1,174 @@
+<section class="content">
+  <div class="container-fluid">
+    <div class="block-header">
+      <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <ul class="breadcrumb breadcrumb-style">
+            <li class="breadcrumb-item">
+              <h4 class="page-title">Rezervacijų peržiūra</h4>
+            </li>
+            <li class="breadcrumb-item bcrumb-1">
+              <a routerLink="/specialistas/skydelis">
+                <i class="fas fa-home"></i>Pagrindinis</a
+              >
+            </li>
+            <li class="breadcrumb-item active">Rezervacijų peržiūra</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <!---->
+    <div class="row">
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="card">
+          <div class="body">
+            <div class="responsive_table">
+              <div class="materialTableHeader">
+                <div class="row">
+                  <div class="col-8">
+                    <ul class="header-buttons-left ml-0">
+                      <li class="dropdown">
+                        <h2>
+                          <strong>Rezervacijų peržiūra</strong>
+                        </h2>
+                      </li>
+                      <li class="dropdown m-l-20">
+                        <label for="search-input"
+                          ><i class="material-icons search-icon"
+                            >search</i
+                          ></label
+                        >
+                        <input
+                          placeholder="Paieška"
+                          type="text"
+                          #filter
+                          class="browser-default search-field"
+                          aria-label="Paieška"
+                        />
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="col-4">
+                    <ul class="header-buttons">
+                      <li>
+                        <div class="icon-button-demo">
+                          <button
+                            mat-mini-fab
+                            color="primary"
+                            (click)="atnaujinti()"
+                          >
+                            <mat-icon class="col-white">refresh</mat-icon>
+                          </button>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <mat-table [dataSource]="gautiDuomenys" matSort class="mat-cell">
+                <ng-container matColumnDef="vardaspavarde">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header
+                    >Vardas</mat-header-cell
+                  >
+                  <mat-cell *matCellDef="let row">
+                    {{ row.vardas }} {{ row.pavarde }}</mat-cell
+                  >
+                </ng-container>
+                <ng-container matColumnDef="telnr">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header
+                    >Tel. Numeris</mat-header-cell
+                  >
+                  <mat-cell *matCellDef="let row"> {{ row.telnr }}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="gyvunovardas">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header
+                    >Gyvūnas</mat-header-cell
+                  >
+                  <mat-cell *matCellDef="let row">
+                    {{ row.gyvunasvardas }}</mat-cell
+                  >
+                </ng-container>
+                <ng-container matColumnDef="gyvunocipas">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header
+                    >Čipas</mat-header-cell
+                  >
+                  <mat-cell *matCellDef="let row">
+                    {{ row.gyvunascipas }}</mat-cell
+                  >
+                </ng-container>
+                <ng-container matColumnDef="data">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header
+                    >Data</mat-header-cell
+                  >
+                  <mat-cell *matCellDef="let row">
+                    {{ row.vizitasdiena | date: "yyyy-MM-dd" }}
+                    {{ row.vizitaspradzia }}
+                  </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="busena">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header
+                    >Būsena</mat-header-cell
+                  >
+                  <mat-cell *matCellDef="let row" class="column-nowrap">
+                    <div
+                      *ngIf="row.vizitasbusena == 'Patvirtintas'"
+                      class="badge col-cyan"
+                    >
+                      {{ row.vizitasbusena }}
+                    </div>
+                    <div
+                      *ngIf="row.vizitasbusena == 'Atliktas'"
+                      class="badge col-green"
+                    >
+                      {{ row.vizitasbusena }}
+                    </div>
+                  </mat-cell>
+                </ng-container>
+                <mat-header-row
+                  *matHeaderRowDef="rodomiStulpeliai"
+                ></mat-header-row>
+                <!-- <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row> -->
+                <mat-row
+                  *matRowDef="let row; columns: rodomiStulpeliai"
+                  (click)="perziuretiDuomenis(row)"
+                  [style.cursor]="'pointer'"
+                  matRipple
+                >
+                </mat-row>
+              </mat-table>
+              <!-- Loading spinner -->
+              <div *ngIf="duomenuBaze.arLenteleKraunasi" class="tbl-spinner">
+                <mat-progress-spinner
+                  color="primary"
+                  [diameter]="40"
+                  mode="indeterminate"
+                >
+                </mat-progress-spinner>
+              </div>
+              <div
+                *ngIf="!duomenuBaze.arLenteleKraunasi"
+                class="no-results"
+                [style.display]="
+                  gautiDuomenys.uzkrautiDuomenys.length == 0 ? '' : 'none'
+                "
+              >
+                Nėra vizitų istorijos įrašų.
+              </div>
+              <mat-paginator
+                #paginator
+                [length]="gautiDuomenys.paieskosDuomenys.length"
+                [pageIndex]="0"
+                [pageSize]="10"
+                [pageSizeOptions]="[5, 10, 20]"
+                showFirstLastButtons
+              >
+              </mat-paginator>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!---->
+  </div>
+</section>

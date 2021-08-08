@@ -1,0 +1,199 @@
+<section class="content">
+  <div class="container-fluid">
+    <div class="block-header">
+      <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <ul class="breadcrumb breadcrumb-style">
+            <li class="breadcrumb-item">
+              <h4 class="page-title">Gyvūnai</h4>
+            </li>
+            <li class="breadcrumb-item bcrumb-1">
+              <a routerLink="/seimininkas/skydelis">
+                <i class="fas fa-home"></i>Pagrindinis</a
+              >
+            </li>
+            <li class="breadcrumb-item active">Gyvūnai</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <!---->
+    <div class="row">
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="card">
+          <div class="body">
+            <div class="responsive_table">
+              <div class="materialTableHeader">
+                <div class="row">
+                  <div class="col-8">
+                    <ul class="header-buttons-left ml-0">
+                      <li class="dropdown">
+                        <h2>
+                          <strong>Gyvūnai</strong>
+                        </h2>
+                      </li>
+                      <li class="dropdown m-l-20">
+                        <label for="search-input"
+                          ><i class="material-icons search-icon"
+                            >search</i
+                          ></label
+                        >
+                        <input
+                          placeholder="Paieška"
+                          type="text"
+                          #filter
+                          class="browser-default search-field"
+                          aria-label="Paieška"
+                        />
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="col-4">
+                    <ul class="header-buttons">
+                      <li>
+                        <div class="icon-button-demo">
+                          <button
+                            mat-mini-fab
+                            color="primary"
+                            (click)="pridetiDuomenis()"
+                          >
+                            <mat-icon class="col-white">add</mat-icon>
+                          </button>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="icon-button-demo">
+                          <button
+                            mat-mini-fab
+                            color="primary"
+                            (click)="atnaujinti()"
+                          >
+                            <mat-icon class="col-white">refresh</mat-icon>
+                          </button>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <mat-table [dataSource]="gautiDuomenys" matSort class="mat-cell">
+                <!-- ID Column -->
+                <!--<ng-container matColumnDef="id_gyvunas">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>ID</mat-header-cell>
+                    <mat-cell *matCellDef="let row">{{row.id_gyvunas}}</mat-cell>
+                  </ng-container>-->
+                <ng-container matColumnDef="vardas">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header
+                    >Vardas</mat-header-cell
+                  >
+                  <mat-cell *matCellDef="let row"> {{ row.vardas }}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="gimimometai">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header
+                    >Gimimo Metai</mat-header-cell
+                  >
+                  <mat-cell *matCellDef="let row">
+                    {{ row.gimimometai | date: "yyyy-MM-dd" }}</mat-cell
+                  >
+                </ng-container>
+                <ng-container matColumnDef="veisle">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header
+                    >Veislė</mat-header-cell
+                  >
+                  <mat-cell *matCellDef="let row"> {{ row.veisle }}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="lytis">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header
+                    >Lytis</mat-header-cell
+                  >
+                  <mat-cell *matCellDef="let row"> {{ row.lytis }} </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="rusis">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header
+                    >Rūšis</mat-header-cell
+                  >
+                  <mat-cell *matCellDef="let row"> {{ row.rusis }}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="cipas">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header
+                    >Čipas</mat-header-cell
+                  >
+                  <mat-cell *matCellDef="let row"> {{ row.cipas }}</mat-cell>
+                </ng-container>
+                <!-- actions -->
+                <ng-container matColumnDef="veiksmai">
+                  <mat-header-cell *matHeaderCellDef class="pr-0"
+                    >Veiksmai</mat-header-cell
+                  >
+                  <mat-cell *matCellDef="let row; let i = index" class="pr-0">
+                    <button
+                      mat-icon-button
+                      color="accent"
+                      class="btn-tbl-confirm"
+                      (click)="$event.stopPropagation()"
+                      (click)="atidarytiIstorijaSkiepas(row)"
+                    >
+                      <mat-icon aria-label="Istorija" class="col-white"
+                        >folder_open</mat-icon
+                      >
+                    </button>
+                    <button
+                      mat-icon-button
+                      color="accent"
+                      class="btn-tbl-edit"
+                      (click)="$event.stopPropagation()"
+                      (click)="redaguotiDuomenis(row)"
+                    >
+                      <mat-icon aria-label="Redaguoti" class="col-white"
+                        >edit</mat-icon
+                      >
+                    </button>
+                  </mat-cell>
+                </ng-container>
+                <mat-header-row
+                  *matHeaderRowDef="rodomiStulpeliai"
+                ></mat-header-row>
+                <!-- <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row> -->
+                <mat-row
+                  *matRowDef="let row; columns: rodomiStulpeliai"
+                  (click)="atidarytiIstorijaSkiepas(row)"
+                  [style.cursor]="'pointer'"
+                  matRipple
+                >
+                </mat-row>
+              </mat-table>
+              <!-- Loading spinner -->
+              <div *ngIf="duomenuBaze.arLenteleKraunasi" class="tbl-spinner">
+                <mat-progress-spinner
+                  color="primary"
+                  [diameter]="40"
+                  mode="indeterminate"
+                >
+                </mat-progress-spinner>
+              </div>
+              <div
+                *ngIf="!duomenuBaze.arLenteleKraunasi"
+                class="no-results"
+                [style.display]="
+                  gautiDuomenys.uzkrautiDuomenys.length == 0 ? '' : 'none'
+                "
+              >
+                Nerasta jokių gyvūnų
+              </div>
+              <mat-paginator
+                #paginator
+                [length]="gautiDuomenys.paieskosDuomenys.length"
+                [pageIndex]="0"
+                [pageSize]="10"
+                [pageSizeOptions]="[10, 25, 50]"
+                showFirstLastButtons
+              >
+              </mat-paginator>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!---->
+  </div>
+</section>

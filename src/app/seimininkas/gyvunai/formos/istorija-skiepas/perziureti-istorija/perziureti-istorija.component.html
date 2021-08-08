@@ -1,0 +1,46 @@
+<div class="addContainer">
+  <div class="contact-details">
+    <div class="modalHeader">
+      <div class="editRowModal">
+        <div class="modalHeader clearfix">
+          <div class="modal-about contact-header">
+            <div class="contact-details-heading">
+              <div class="contact-details-name mb-2">
+                {{ formosAntraste }} ({{ istorija.laikas }})
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button mat-icon-button (click)="dialogRef.close()" aria-label="Uždaryti">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+    <div mat-dialog-content>
+      <mat-card-content>
+        <div class="contact-details-field">
+          <i class="material-icons-two-tone color-icon">mood</i>
+          <div class="contact-detail-info">{{ istorija.savijauta }}</div>
+          <i class="material-icons-two-tone color-icon">filter_vintage</i>
+          <div class="contact-detail-info">{{ istorija.svoris }} kg</div>
+        </div>
+        <div class="contact-details-field">
+          <i class="material-icons-two-tone color-icon"
+            >sentiment_very_satisfied</i
+          >
+          <div class="contact-detail-info">{{ istorija.paskirtasgydymas }}</div>
+        </div>
+        <div class="contact-details-field">
+          <i class="material-icons-two-tone color-icon"
+            >sentiment_dissatisfied</i
+          >
+          <div class="contact-detail-info">{{ istorija.nustatyta }}</div>
+        </div>
+        <div class="contact-details-field">
+          <i class="material-icons-two-tone color-icon">sentiment_neutral</i>
+          <div class="contact-detail-info">{{ istorija.komentarai }}</div>
+        </div>
+      </mat-card-content>
+    </div>
+  </div>
+</div>

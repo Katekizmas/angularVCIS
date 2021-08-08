@@ -1,0 +1,379 @@
+<section class="content">
+  <div class="container-fluid">
+    <div class="block-header">
+      <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <ul class="breadcrumb breadcrumb-style">
+            <li class="breadcrumb-item">
+              <h4 class="page-title">Vizitų istorija</h4>
+            </li>
+            <li class="breadcrumb-item bcrumb-1">
+              <a routerLink="/seimininkas/skydelis">
+                <i class="fas fa-home"></i>Pagrindinis</a
+              >
+            </li>
+            <li class="breadcrumb-item active">Vizitai</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <!---->
+    <div class="row clearfix">
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="card">
+          <div class="body">
+            <mat-tab-group>
+              <mat-tab>
+                <ng-template mat-tab-label>
+                  <mat-icon class="example-tab-icon mr-2">upcoming</mat-icon>
+                  Artėjantys vizitai
+                </ng-template>
+                <!---->
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                  <div class="body table-responsive table table-hover">
+                    <div class="materialTableHeader">
+                      <div class="row">
+                        <div class="col-8">
+                          <ul class="header-buttons-left ml-0">
+                            <li class="dropdown">
+                              <h2>
+                                <strong>Artėjantys vizitai</strong>
+                              </h2>
+                            </li>
+                          </ul>
+                        </div>
+                        <div class="col-4">
+                          <ul class="header-buttons">
+                            <li>
+                              <div class="icon-button-demo">
+                                <button
+                                  mat-mini-fab
+                                  color="primary"
+                                  (click)="uzkrautiDuomenis()"
+                                >
+                                  <mat-icon class="col-white">refresh</mat-icon>
+                                </button>
+                              </div>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                    <!---->
+                    <table
+                      mat-table
+                      [dataSource]="vizitaiArtejantys"
+                      class="w-100"
+                    >
+                      <ng-container matColumnDef="gyvunas">
+                        <th mat-header-cell *matHeaderCellDef>Gyvūnas</th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element.gyvunas }}
+                        </td>
+                      </ng-container>
+                      <ng-container matColumnDef="paslauga">
+                        <th mat-header-cell *matHeaderCellDef>Paslauga</th>
+                        <td
+                          mat-cell
+                          *matCellDef="let element"
+                          class="column-nowrap"
+                        >
+                          {{ element.pavadinimas }}
+                        </td>
+                      </ng-container>
+                      <ng-container matColumnDef="diena">
+                        <th mat-header-cell *matHeaderCellDef>Data</th>
+                        <td
+                          mat-cell
+                          *matCellDef="let element"
+                          class="column-nowrap"
+                        >
+                          {{ element.diena | date: "yyyy-MM-dd" }}
+                        </td>
+                      </ng-container>
+                      <ng-container matColumnDef="laikas">
+                        <th mat-header-cell *matHeaderCellDef>Laikas</th>
+                        <td
+                          mat-cell
+                          *matCellDef="let element"
+                          class="column-nowrap"
+                        >
+                          {{ element.pradzia }} - {{ element.pabaiga }}
+                        </td>
+                      </ng-container>
+                      <ng-container matColumnDef="busena">
+                        <th mat-header-cell *matHeaderCellDef>Būsena</th>
+                        <td
+                          mat-cell
+                          *matCellDef="let element"
+                          class="column-nowrap"
+                        >
+                          <div
+                            class="badge col-orange"
+                            *ngIf="element.busena === 'Nepatvirtintas'"
+                          >
+                            {{ element.busena }}
+                          </div>
+                          <div
+                            class="badge col-cyan"
+                            *ngIf="element.busena === 'Patvirtintas'"
+                          >
+                            {{ element.busena }}
+                          </div>
+                        </td>
+                      </ng-container>
+                      <!--<ng-container matColumnDef="veiksmai">
+                        <th mat-header-cell *matHeaderCellDef class="pr-0">
+                          Veiksmai
+                        </th>
+                        <td mat-cell *matCellDef="let element" class="pr-0">
+                          <button
+                            mat-icon-button
+                            color="accent"
+                            class="btn-tbl-confirm"
+                            (click)="$event.stopPropagation()"
+                            (click)="perziuretiVizitoDuomenis(element)"
+                          >
+                            <mat-icon aria-label="Peržiūrėti" class="col-white"
+                              >folder_open</mat-icon
+                            >
+                          </button>
+                          <button
+                            mat-icon-button
+                            color="accent"
+                            class="btn-tbl-delete"
+                            (click)="$event.stopPropagation()"
+                            (click)="atsauktiVizita(element)"
+                          >
+                            <mat-icon aria-label="Ištrinti" class="col-white"
+                              >clear</mat-icon
+                            >
+                          </button>
+
+                          <button mat-menu-item>
+                              <i class="material-icons-two-tone align-middle mr-2">done</i>
+                              <span>Approve</span>
+                            </button>
+                            <button mat-menu-item>
+                              <i class="material-icons-two-tone align-middle mr-2">highlight_off</i>
+                              <span>Cancel</span>
+                            </button>
+                        </td>
+                      </ng-container>-->
+                      <tr
+                        mat-header-row
+                        *matHeaderRowDef="rodomiStulpeliaiVizitas"
+                      ></tr>
+                      <tr
+                        mat-row
+                        *matRowDef="
+                          let element;
+                          let i = index;
+                          columns: rodomiStulpeliaiVizitas
+                        "
+                        (click)="atliekamasVeiksmas(element, i)"
+                        [style.cursor]="'pointer'"
+                        matRipple
+                      >
+                        >
+                      </tr>
+                    </table>
+                    <div
+                      *ngIf="vizitasService.arLenteleKraunasi"
+                      class="tbl-spinner"
+                    >
+                      <mat-progress-spinner
+                        color="primary"
+                        [diameter]="40"
+                        mode="indeterminate"
+                      >
+                      </mat-progress-spinner>
+                    </div>
+                    <div
+                      *ngIf="!vizitasService.arLenteleKraunasi"
+                      class="no-results"
+                      [style.display]="
+                        vizitaiArtejantys?.paginator.length == 0 ? '' : 'none'
+                      "
+                    >
+                      Nėra jokių artėjančių vizitų
+                    </div>
+                    <mat-paginator
+                      #vizitasArtejantysPaginator
+                      [pageSizeOptions]="[5, 10, 20]"
+                    ></mat-paginator>
+                  </div>
+                </div>
+                <!---->
+              </mat-tab>
+
+              <mat-tab>
+                <ng-template mat-tab-label>
+                  <mat-icon class="example-tab-icon mr-2">history</mat-icon>
+                  Vizitų istorija
+                </ng-template>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                  <div class="body table-responsive table table-hover">
+                    <!---->
+                    <div class="materialTableHeader">
+                      <div class="row">
+                        <div class="col-8">
+                          <ul class="header-buttons-left ml-0">
+                            <li class="dropdown">
+                              <h2>
+                                <strong>Vizitų istorija</strong>
+                              </h2>
+                            </li>
+                          </ul>
+                        </div>
+                        <div class="col-4">
+                          <ul class="header-buttons">
+                            <li>
+                              <div class="icon-button-demo">
+                                <button
+                                  mat-mini-fab
+                                  color="primary"
+                                  (click)="uzkrautiDuomenis()"
+                                >
+                                  <mat-icon class="col-white">refresh</mat-icon>
+                                </button>
+                              </div>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                    <!---->
+                    <table
+                      mat-table
+                      [dataSource]="vizitaiIstorija"
+                      class="w-100"
+                    >
+                      <ng-container matColumnDef="gyvunas">
+                        <th mat-header-cell *matHeaderCellDef>Gyvūnas</th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element.gyvunas }}
+                        </td>
+                      </ng-container>
+                      <ng-container matColumnDef="paslauga">
+                        <th mat-header-cell *matHeaderCellDef>Paslauga</th>
+                        <td
+                          mat-cell
+                          *matCellDef="let element"
+                          class="column-nowrap"
+                        >
+                          {{ element.pavadinimas }}
+                        </td>
+                      </ng-container>
+                      <ng-container matColumnDef="diena">
+                        <th mat-header-cell *matHeaderCellDef>Data</th>
+                        <td
+                          mat-cell
+                          *matCellDef="let element"
+                          class="column-nowrap"
+                        >
+                          {{ element.diena | date: "yyyy-MM-dd" }}
+                        </td>
+                      </ng-container>
+                      <ng-container matColumnDef="laikas">
+                        <th mat-header-cell *matHeaderCellDef>Laikas</th>
+                        <td
+                          mat-cell
+                          *matCellDef="let element"
+                          class="column-nowrap"
+                        >
+                          {{ element.pradzia }}-{{ element.pabaiga }}
+                        </td>
+                      </ng-container>
+                      <ng-container matColumnDef="busena">
+                        <th mat-header-cell *matHeaderCellDef>Būsena</th>
+                        <td
+                          mat-cell
+                          *matCellDef="let element"
+                          class="column-nowrap"
+                        >
+                          <div
+                            class="badge col-red"
+                            *ngIf="element.busena === 'Atšauktas'"
+                          >
+                            {{ element.busena }}
+                          </div>
+                          <div
+                            class="badge col-green"
+                            *ngIf="element.busena === 'Atliktas'"
+                          >
+                            {{ element.busena }}
+                          </div>
+                        </td>
+                      </ng-container>
+                      <!--<ng-container matColumnDef="veiksmai">
+                        <th mat-header-cell *matHeaderCellDef class="pr-0">
+                          Veiksmai
+                        </th>
+                        <td mat-cell *matCellDef="let element" class="pr-0">
+                          <button
+                            mat-icon-button
+                            color="accent"
+                            class="btn-tbl-confirm"
+                            (click)="$event.stopPropagation()"
+                            (click)="perziuretiVizitoDuomenis(element)"
+                          >
+                            <mat-icon aria-label="Peržiūrėti" class="col-white"
+                              >folder_open</mat-icon
+                            >
+                          </button>
+                        </td>
+                      </ng-container>-->
+                      <tr
+                        mat-header-row
+                        *matHeaderRowDef="rodomiStulpeliaiVizitas"
+                      ></tr>
+                      <tr
+                        mat-row
+                        *matRowDef="
+                          let element;
+                          let i = index;
+                          columns: rodomiStulpeliaiVizitas
+                        "
+                        (click)="atliekamasVeiksmas(element, i)"
+                        [style.cursor]="'pointer'"
+                        matRipple
+                      >
+                        >
+                      </tr>
+                    </table>
+                    <div
+                      *ngIf="vizitasService.arLenteleKraunasi"
+                      class="tbl-spinner"
+                    >
+                      <mat-progress-spinner
+                        color="primary"
+                        [diameter]="40"
+                        mode="indeterminate"
+                      >
+                      </mat-progress-spinner>
+                    </div>
+                    <div
+                      *ngIf="!vizitasService.arLenteleKraunasi"
+                      class="no-results"
+                      [style.display]="
+                        vizitaiIstorija?.paginator.length == 0 ? '' : 'none'
+                      "
+                    >
+                      Nėra jokių vizitų istorijos įrašų
+                    </div>
+                    <mat-paginator
+                      #vizitasIstorijaPaginator
+                      [pageSizeOptions]="[5, 10, 20]"
+                    ></mat-paginator>
+                  </div>
+                </div>
+              </mat-tab>
+            </mat-tab-group>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!---->
+  </div>
+</section>

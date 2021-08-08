@@ -1,0 +1,25 @@
+/* You can add global styles to this file, and also import other style files */
+
+//Firefox
+* {
+    scrollbar-width: thin;
+    scrollbar-color: #d6dee1 #a8bbbf;;
+}
+  
+//Chrome, Edge, and Safari
+*::-webkit-scrollbar {
+    width: 8px;
+}
+  
+*::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+  
+*::-webkit-scrollbar-thumb {
+    background-color: #cccccc;
+    border-radius: 8px;
+    border: 6px solid transparent;
+}
+*::-webkit-scrollbar-thumb:hover {
+    background-color: #a8bbbf;
+}

@@ -1,0 +1,52 @@
+<div class="addContainer">
+  <div class="contact-details">
+    <div class="modalHeader">
+      <div class="editRowModal">
+        <div class="modalHeader clearfix">
+          <div class="modal-about contact-header">
+            <div class="contact-details-heading">
+              <div class="contact-details-name mb-2">
+                {{ vizitas.gyvunas }} ({{ vizitas.pavadinimas }})
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button mat-icon-button (click)="dialogRef.close()" aria-label="Uždaryti">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+    <div mat-dialog-content>
+      <mat-card-content>
+        <div class="contact-details-field">
+          <i class="material-icons-two-tone color-icon">account_circle</i>
+          <div class="contact-detail-info">
+            {{ vizitas.vardas }} {{ vizitas.pavarde }}
+          </div>
+          <i class="material-icons-two-tone color-icon">work</i>
+          <div class="contact-detail-info">{{ vizitas.telnr }}</div>
+        </div>
+        <div class="contact-details-field">
+          <i class="material-icons-two-tone color-icon">filter_vintage</i>
+          <div class="contact-detail-info">
+            {{ vizitas.diena | date: "yyyy-MM-dd" }}
+          </div>
+          <i class="material-icons-two-tone color-icon">filter_vintage</i>
+          <div class="contact-detail-info">
+            {{ vizitas.pradzia }}-{{ vizitas.pabaiga }}
+          </div>
+        </div>
+        <div class="contact-details-field">
+          <i class="material-icons-two-tone color-icon"
+            >sentiment_dissatisfied</i
+          >
+          <div class="contact-detail-info">{{ vizitas.pastabos }}</div>
+        </div>
+        <div class="contact-details-field">
+          <i class="material-icons-two-tone color-icon">sentiment_neutral</i>
+          <div class="contact-detail-info">{{ vizitas.busena }}</div>
+        </div>
+      </mat-card-content>
+    </div>
+  </div>
+</div>

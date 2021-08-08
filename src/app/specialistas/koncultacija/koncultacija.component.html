@@ -1,0 +1,156 @@
+<section class="content">
+  <div class="container-fluid">
+    <div class="block-header">
+      <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <ul class="breadcrumb breadcrumb-style">
+            <li class="breadcrumb-item">
+              <h4 class="page-title">Pagalba</h4>
+            </li>
+            <li class="breadcrumb-item bcrumb-1">
+              <a routerLink="/specialistas/skydelis">
+                <i class="fas fa-home"></i>Pagrindinis</a
+              >
+            </li>
+            <li class="breadcrumb-item active">Pagalba</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <!---->
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+        <div class="card">
+          <div class="body">
+            <div id="plist" class="people-list">
+              <div class="form-line m-b-15">
+                <input type="text" class="form-control" placeholder="Paieška" />
+              </div>
+              <div class="tab-content">
+                <div
+                  id="chat_user"
+                  style="position: relative; max-height: 590px"
+                  [perfectScrollbar]
+                >
+                  <div
+                    *ngFor="let row of dalyviai"
+                    style="padding-bottom: 5px"
+                    (click)="pasirinktiDalyvi(row); scrollMe.scrollTop = 0"
+                  >
+                    <ul class="chat-list list-unstyled m-b-0">
+                      <li
+                        class="clearfix"
+                        [ngClass]="
+                          pasirinktasDalyvis == row
+                            ? 'clearfix active'
+                            : 'clearfix'
+                        "
+                      >
+                        <img src="assets/images/user/user.png" alt="avatar" />
+                        <div class="about">
+                          <div class="name">
+                            {{ row.vardas }} {{ row.pavarde }}
+                          </div>
+                          <div class="status">
+                            <i class="material-icons online">phone</i>
+                            {{ row.telnr }}
+                          </div>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+        <div class="card">
+          <div class="chat">
+            <div
+              class="chat-header clearfix"
+              *ngIf="pasirinktasDalyvis != undefined"
+            >
+              <img src="assets/images/user/user.png" alt="avatar" />
+              <div class="chat-about">
+                <div class="chat-with">
+                  {{ pasirinktasDalyvis.vardas }}
+                  {{ pasirinktasDalyvis.pavarde }}
+                </div>
+                <div class="chat-num-messages">
+                  {{ pasirinktasDalyvis.telnr }}
+                </div>
+              </div>
+            </div>
+            <div
+              class="chat-history"
+              id="chat-conversation"
+              style="position: relative; max-height: 449px"
+              #scrollMe
+              [perfectScrollbar]
+            >
+              <ul *ngFor="let row of dalyvioZinutes">
+                <li
+                  class="clearfix"
+                  *ngIf="row.fk_siuntejas == pasirinktasDalyvis.fk_specialistas"
+                >
+                  <div class="message-data text-right">
+                    <span class="message-data-name">Aš</span>
+                    <span class="message-data-time">{{ row.laikas }}</span>
+                  </div>
+                  <div class="message other-message float-right">
+                    {{ row.zinute }}
+                  </div>
+                </li>
+                <li *ngIf="row.fk_gavejas != pasirinktasDalyvis.fk_seimininkas">
+                  <div class="message-data">
+                    <span class="message-data-name"
+                      >{{ pasirinktasDalyvis.vardas }}
+                      {{ pasirinktasDalyvis.pavarde }}</span
+                    >
+                    <span class="message-data-time">{{ row.laikas }}</span>
+                  </div>
+                  <div class="message my-message">
+                    <p>{{ row.zinute }}</p>
+                    <div class="row"></div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="chat-message clearfix">
+              <div class="form-group">
+                <div class="form-line">
+                  <mat-form-field
+                    class="example-full-width"
+                    appearance="fill"
+                    [hideRequiredMarker]="hideRequiredControl.value"
+                    [floatLabel]="false"
+                  >
+                    <input
+                      matInput
+                      placeholder="Įrašykite žinutę.."
+                      [(ngModel)]="zinutestekstas"
+                      (keyup.enter)="issiustiZinute()"
+                    />
+                  </mat-form-field>
+                  <div class="chat-upload">
+                    <button
+                      mat-raised-button
+                      color="primary"
+                      [disabled]="!zinutestekstas"
+                      (click)="issiustiZinute()"
+                    >
+                      <i class="material-icons">send</i>
+                      IŠSIŲSTI
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

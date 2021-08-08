@@ -1,0 +1,217 @@
+<div class="addContainer">
+  <div class="modalHeader">
+    <div class="editRowModal">
+      <div class="modalHeader clearfix">
+        <div class="modal-about">
+          <div class="font-weight-bold p-t-5 p-l-10 font-17">
+            {{ formosAntraste }}
+          </div>
+        </div>
+      </div>
+    </div>
+    <button mat-icon-button (click)="dialogRef.close()" aria-label="Uždaryti">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+      <div class="card">
+        <div class="body">
+          <mat-tab-group>
+            <mat-tab>
+              <ng-template mat-tab-label>
+                <mat-icon class="example-tab-icon mr-2">view_week</mat-icon>
+                Informacija
+              </ng-template>
+              <!---->
+              <div mat-dialog-content>
+                <form
+                  class="register-form m-4"
+                  [formGroup]="specialistasForma"
+                  (ngSubmit)="(issaugoti)"
+                >
+                  <!-- -->
+                  <div class="row">
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+                      <mat-form-field
+                        class="example-full-width"
+                        appearance="fill"
+                      >
+                        <mat-label>Pareigos</mat-label>
+                        <span matPrefix>
+                          <mat-icon class="mr-2">how_to_reg</mat-icon>
+                        </span>
+                        <input matInput formControlName="pareigos" required />
+                        <mat-error
+                          *ngIf="
+                            specialistasForma
+                              .get('pareigos')
+                              .hasError('required')
+                          "
+                          >Įveskite pareigas</mat-error
+                        >
+                      </mat-form-field>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                      <mat-form-field
+                        class="example-full-width"
+                        appearance="fill"
+                      >
+                        <mat-label>Nuo</mat-label>
+                        <span matPrefix>
+                          <mat-icon class="mr-2">access_time</mat-icon>
+                        </span>
+                        <mat-select
+                          formControlName="darbolaikasnuo"
+                          [(ngModel)]="specialistas.darbolaikasnuo"
+                          required
+                        >
+                          <mat-option
+                            *ngFor="let row of laikas"
+                            [value]="row"
+                            >{{ row }}</mat-option
+                          >
+                        </mat-select>
+                        <mat-error
+                          *ngIf="
+                            specialistasForma
+                              .get('darbolaikasnuo')
+                              .hasError('required')
+                          "
+                          >Pasirinkite laiką</mat-error
+                        >
+                      </mat-form-field>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                      <mat-form-field
+                        class="example-full-width"
+                        appearance="fill"
+                      >
+                        <mat-label>Iki</mat-label>
+                        <span matPrefix>
+                          <mat-icon class="mr-2">access_time</mat-icon>
+                        </span>
+                        <mat-select
+                          formControlName="darbolaikasiki"
+                          [(ngModel)]="specialistas.darbolaikasiki"
+                          required
+                        >
+                          <mat-option
+                            *ngFor="let row of laikas"
+                            [value]="row"
+                            >{{ row }}</mat-option
+                          >
+                        </mat-select>
+                        <mat-error
+                          *ngIf="
+                            specialistasForma
+                              .get('darbolaikasiki')
+                              .hasError('required')
+                          "
+                          >Pasirinkite laiką</mat-error
+                        >
+                      </mat-form-field>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+                      <mat-form-field
+                        class="example-full-width"
+                        appearance="fill"
+                      >
+                        <mat-label>Pastabos</mat-label>
+                        <textarea
+                          matInput
+                          formControlName="pastabos"
+                          style="min-height: 100px"
+                        ></textarea>
+                        <mat-error
+                          *ngIf="
+                            specialistasForma
+                              .get('pastabos')
+                              .hasError('required')
+                          "
+                          >Įveskite pastabas</mat-error
+                        >
+                        <!--<textarea matInput formControlName="cipas" readonly></textarea> -->
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </form>
+              </div>
+              <!---->
+            </mat-tab>
+            <mat-tab>
+              <ng-template mat-tab-label>
+                <mat-icon class="example-tab-icon mr-2">next_plan</mat-icon>
+                Paslaugos
+              </ng-template>
+              <!---->
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="card">
+                  <div class="header">
+                    <h2>
+                      Priskirkite paslaugas, kurias gali atlikti šis
+                      darbuotojas.
+                    </h2>
+                  </div>
+                  <mat-selection-list #paslaugoss>
+                    <mat-list-option
+                      *ngFor="let paslauga of paslaugos; let i = index"
+                      checkboxPosition="before"
+                      [selected]="paslauga.priklauso"
+                      (click)="paslaugaPaspausta(i)"
+                      style="
+                        display: inline-block;
+                        width: 50%;
+                        text-align: left;
+                      "
+                    >
+                      {{ paslauga.pavadinimas }}
+                    </mat-list-option>
+                  </mat-selection-list>
+                  <p>
+                    Specialisto paslaugų kiekis:
+                    {{ paslaugoss.selectedOptions.selected.length }}
+                  </p>
+                </div>
+              </div>
+              <!---->
+            </mat-tab>
+          </mat-tab-group>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+          <div class="button-row button-center">
+            <button
+              mat-raised-button
+              color="primary"
+              [type]="submit"
+              [disabled]="!specialistasForma.valid"
+              [mat-dialog-close]="1"
+              (click)="issaugoti()"
+            >
+              Išsaugoti
+            </button>
+            <button
+              mat-raised-button
+              color="accent"
+              (click)="atsaukti()"
+              tabindex="-1"
+            >
+              Uždaryti
+            </button>
+            <button mat-raised-button color="warn" (click)="istrinti()">
+              Ištrinti
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

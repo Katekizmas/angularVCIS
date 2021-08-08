@@ -1,0 +1,163 @@
+<div class="addContainer">
+  <div class="modalHeader">
+    <div class="editRowModal">
+      <div class="modalHeader clearfix">
+        <div class="modal-about">
+          <div class="font-weight-bold p-t-5 p-l-10 font-17">
+            {{ formosAntraste }}
+          </div>
+        </div>
+      </div>
+    </div>
+    <button mat-icon-button (click)="dialogRef.close()" aria-label="Uždaryti">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+  <div mat-dialog-content>
+    <form
+      class="register-form m-4"
+      [formGroup]="gyvunasForma"
+      (ngSubmit)="(issaugoti)"
+    >
+      <div class="row">
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+          <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>Vardas</mat-label>
+            <span matPrefix>
+              <mat-icon class="mr-2">cruelty_free</mat-icon>
+            </span>
+            <input matInput formControlName="vardas" required />
+            <mat-error *ngIf="gyvunasForma.get('vardas').hasError('required')"
+              >Įveskite vardą</mat-error
+            >
+          </mat-form-field>
+        </div>
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+          <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>Gimimo Metai</mat-label>
+            <input
+              matInput
+              [matDatepicker]="picker"
+              formControlName="gimimometai"
+              required
+              readonly
+            />
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="picker"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            <mat-error
+              *ngIf="gyvunasForma.get('gimimometai').hasError('required')"
+              >Pasirinkite gimimo metus</mat-error
+            >
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+          <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>Lytis</mat-label>
+            <span matPrefix>
+              <mat-icon class="mr-2">male</mat-icon>
+            </span>
+            <mat-select formControlName="lytis" required>
+              <mat-option value="Patinas">Patinas</mat-option>
+              <mat-option value="Patelė">Patelė</mat-option>
+              <mat-option value="Nežinoma">Nežinoma</mat-option>
+            </mat-select>
+            <mat-error *ngIf="gyvunasForma.get('lytis').hasError('required')"
+              >Pasirinkite lytį</mat-error
+            >
+          </mat-form-field>
+        </div>
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+          <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>Rūšis</mat-label>
+            <span matPrefix>
+              <mat-icon class="mr-2">architecture</mat-icon>
+            </span>
+            <mat-select
+              formControlName="rusis"
+              (selectionChange)="rusiesID($event.value)"
+              [(ngModel)]="gyvunas.fk_rusis"
+              required
+            >
+              <mat-option *ngFor="let row of rusis" [value]="row.id_rusis">{{
+                row.pavadinimas
+              }}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="gyvunasForma.get('rusis').hasError('required')"
+              >Pasirinkite rūšį</mat-error
+            >
+          </mat-form-field>
+        </div>
+      </div>
+      <!-- -->
+      <div class="row">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+          <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>Veislė</mat-label>
+            <span matPrefix>
+              <mat-icon class="mr-2">pets</mat-icon>
+            </span>
+            <input matInput formControlName="veisle" required />
+            <mat-error *ngIf="gyvunasForma.get('veisle').hasError('required')"
+              >Įveskite veislę</mat-error
+            >
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+          <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>Čipas</mat-label>
+            <span matPrefix>
+              <mat-icon class="mr-2">sd_card</mat-icon>
+            </span>
+            <input
+              matInput
+              formControlName="cipas"
+              [maxlength]="20"
+              oninput="this.value = this.value.toUpperCase()"
+            />
+            <mat-error *ngIf="gyvunasForma.get('cipas').hasError('required')"
+              >Įveskite čipą</mat-error
+            >
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+          <div class="button-row button-center">
+            <button
+              mat-raised-button
+              color="primary"
+              [type]="issaugoti"
+              [disabled]="!gyvunasForma.valid"
+              (click)="issaugoti()"
+            >
+              Išsaugoti
+            </button>
+            <button
+              mat-raised-button
+              color="accent"
+              (click)="uzdaryti()"
+              tabindex="-1"
+            >
+              Uždaryti
+            </button>
+            <button
+              mat-raised-button
+              color="warn"
+              [type]="issaugoti"
+              (click)="istrinti()"
+            >
+              Ištrinti
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

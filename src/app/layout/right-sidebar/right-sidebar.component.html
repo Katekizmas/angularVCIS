@@ -1,0 +1,17 @@
+<!-- Right Sidebar -->
+<aside id="rightsidebar" class="right-sidebar" style="height: 100px;" [ngClass]="isOpenSidebar ? 'open' : 'close'"
+  (clickOutside)="onClickedOutside($event)">
+  <div class="rightSidebarClose" (click)="toggleRightSidebar()"><i class="far fa-times-circle"></i></div>
+  <div class="demo-skin"
+    [ngStyle]="{'position' : 'relative', 'max-height' : maxHeight+'px', 'max-width' : maxWidth+'px'}"
+    [perfectScrollbar]>
+    <div class="rightSetting">
+      <p>TEMOS NUSTATYMAI</p>
+      <mat-button-toggle-group class="mt-2" [value]="isDarTheme ? 'dark' : 'light'">
+        <mat-button-toggle class="w-100" (click)="lightThemeBtnClick()" value="light">Šviesus</mat-button-toggle>
+        <mat-button-toggle class="w-100" (click)="darkThemeBtnClick()" value="dark">Tamsus</mat-button-toggle>
+      </mat-button-toggle-group>
+    </div>
+  </div>
+</aside>
+<!-- #END# Right Sidebar -->

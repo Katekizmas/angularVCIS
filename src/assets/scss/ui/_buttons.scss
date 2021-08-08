@@ -1,0 +1,19 @@
+﻿/*
+ *  Document   : _buttons.scss
+ *  Author     : RedStar Template
+ *  Description: This scss file for button style classes
+ */
+.button-row button,
+.button-row a {
+  margin-right: 8px;
+  padding: 6px 20px;
+  font-size: 18px !important;
+}
+
+.btn:focus,
+.btn.focus {
+  box-shadow: none;
+}
+.button-center {
+  text-align: center;
+}
